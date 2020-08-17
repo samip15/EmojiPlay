@@ -159,17 +159,37 @@ public class MainActivity extends AppCompatActivity {
      * Saves the image clicked
      */
     public void saveMe(View view) {
+        // delete the old temporary file
+        BitmapUtils.deleteImageFile(this,mTempPhotoPath);
+        // save image file
+        BitmapUtils.saveImage(this,mResultImageBitmap);
     }
 
     /**
      * Helps to share the image in bitmap format
      */
     public void shareMe(View view) {
+
+        // delete the old temporary file
+        BitmapUtils.deleteImageFile(this,mTempPhotoPath);
+        // save image file
+      String savePath = BitmapUtils.saveImage(this,mResultImageBitmap);
+        // share image file
+        BitmapUtils.shareImage(this,savePath);
     }
 
     /**
      * Removes the image and reset
      */
     public void clearImage(View view) {
+        //button visibility
+        mImageView.setImageResource(0);
+        mTitleTv.setVisibility(View.VISIBLE);
+        mEmojiBtn.setVisibility(View.VISIBLE);
+        mClearFab.setVisibility(View.GONE);
+        mSaveFab.setVisibility(View.GONE);
+        mShareFab.setVisibility(View.GONE);
+        // delete
+        BitmapUtils.deleteImageFile(this,mTempPhotoPath);
     }
 }
