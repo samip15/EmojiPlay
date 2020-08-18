@@ -28,7 +28,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
     private final static int REQUEST_STORAGE_PERMISSION = 1;
     private final static int REQUEST_CAMERA_CODE = 1;
-    private final static String FILE_PROVIDER_AUHTHORITY = "com.example.android.fileprovider";
+    private final static String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
 
     //views
     private ImageView mImageView;
@@ -116,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
                 //location
                 mTempPhotoPath = photoFile.getAbsolutePath();
                 //uri
-                Uri photoUri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUHTHORITY, photoFile);
+                Uri photoUri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUTHORITY, photoFile);
                 //add uri to the camera so that it can stored the capture image
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 
                 //launch camera
-                startActivityForResult(takePictureIntent,REQUEST_CAMERA_CODE);
+                startActivityForResult(takePictureIntent, REQUEST_CAMERA_CODE);
             }
         }
     }
@@ -139,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
 // ====================================== IMAGE ============================================
 
-    private void processAndSetImage()
-    {
+    private void processAndSetImage() {
         //button visibility
         mTitleTv.setVisibility(View.GONE);
         mEmojiBtn.setVisibility(View.GONE);
@@ -149,7 +148,10 @@ public class MainActivity extends AppCompatActivity {
         mShareFab.setVisibility(View.VISIBLE);
 
         //resample to fit imageview
-        mResultImageBitmap = BitmapUtils.resamplePic(this,mTempPhotoPath);
+        mResultImageBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
+
+        // detect the faces
+       mResultImageBitmap =  EmojiPlayer.detectFacesEmoji(this,mResultImageBitmap);
 
         //set in iv
         mImageView.setImageBitmap(mResultImageBitmap);
@@ -160,9 +162,9 @@ public class MainActivity extends AppCompatActivity {
      */
     public void saveMe(View view) {
         // delete the old temporary file
-        BitmapUtils.deleteImageFile(this,mTempPhotoPath);
+        BitmapUtils.deleteImageFile(this, mTempPhotoPath);
         // save image file
-        BitmapUtils.saveImage(this,mResultImageBitmap);
+        BitmapUtils.saveImage(this, mResultImageBitmap);
     }
 
     /**
@@ -171,11 +173,11 @@ public class MainActivity extends AppCompatActivity {
     public void shareMe(View view) {
 
         // delete the old temporary file
-        BitmapUtils.deleteImageFile(this,mTempPhotoPath);
+        BitmapUtils.deleteImageFile(this, mTempPhotoPath);
         // save image file
-      String savePath = BitmapUtils.saveImage(this,mResultImageBitmap);
+        String savePath = BitmapUtils.saveImage(this, mResultImageBitmap);
         // share image file
-        BitmapUtils.shareImage(this,savePath);
+        BitmapUtils.shareImage(this, savePath);
     }
 
     /**
@@ -190,6 +192,6 @@ public class MainActivity extends AppCompatActivity {
         mSaveFab.setVisibility(View.GONE);
         mShareFab.setVisibility(View.GONE);
         // delete
-        BitmapUtils.deleteImageFile(this,mTempPhotoPath);
+        BitmapUtils.deleteImageFile(this, mTempPhotoPath);
     }
 }

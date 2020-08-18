@@ -74,9 +74,9 @@ public class BitmapUtils {
                 "yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + ".jpg";
         File storageDir = new File(Environment.getExternalStoragePublicDirectory
-                (Environment.DIRECTORY_PICTURES)+"/EmojiiPlay");
+                (Environment.DIRECTORY_PICTURES)+"/EmojiPlay");
         boolean success = true;
-        if (storageDir.exists()){
+        if (!storageDir.exists()){
             success = storageDir.mkdirs();
         }
         if (success){
