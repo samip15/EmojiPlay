@@ -25,7 +25,7 @@ public class EmojiPlayer {
     /**
      * Function To Detect Faces
      */
-    public static Bitmap detectFacesEmoji(Context context, Bitmap picture) {
+    public static Bitmap detectFacesAndEmoji(Context context, Bitmap picture) {
         // create face detector
         FaceDetector detector = new FaceDetector.Builder(context)
                 .setTrackingEnabled(false)
@@ -47,7 +47,7 @@ public class EmojiPlayer {
             for (int i = 0; i < faces.size(); i++) {
                 Face face = faces.valueAt(i);
                 Bitmap emojiBitmap;
-                switch (getCRightEmoji(face)) {
+                switch (getRightEmoji(face)) {
                     case SMILE:
                         emojiBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.smile);
                         break;
@@ -96,7 +96,7 @@ public class EmojiPlayer {
      *
      * @param face
      */
-    private static Emoji getCRightEmoji(Face face) {
+    private static Emoji getRightEmoji(Face face) {
         // log all probability
         Log.e(TAG, "smiling prob=" + face.getIsSmilingProbability());
         Log.e(TAG, "smiling prob=" + face.getIsLeftEyeOpenProbability());
@@ -144,7 +144,7 @@ public class EmojiPlayer {
         emojiBitmap = Bitmap.createScaledBitmap(emojiBitmap,newEmojiWidth,newEmojiHeight,false);
         // determine the position of the face
         float emojiPositionX = (face.getPosition().x +face.getWidth()/2)-(emojiBitmap.getWidth()/2);
-        float emojiPositionY = (face.getPosition().y +face.getWidth()/2)-(emojiBitmap.getWidth()/3);
+        float emojiPositionY = (face.getPosition().y +face.getWidth()/2)-(emojiBitmap.getHeight()/3);
         // create a canvas to draw the bitmap
         Canvas canvas = new Canvas();
         canvas.drawBitmap(backgroundBitmap,0,0,null);
