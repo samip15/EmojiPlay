@@ -142,9 +142,9 @@ public class EmojiPlayer {
 
         // scale the emoji
         emojiBitmap = Bitmap.createScaledBitmap(emojiBitmap,newEmojiWidth,newEmojiHeight,false);
-        // determine the position of the face
-        float emojiPositionX = (face.getPosition().x +face.getWidth()/2)-(emojiBitmap.getWidth()/2);
-        float emojiPositionY = (face.getPosition().y +face.getWidth()/2)-(emojiBitmap.getHeight()/3);
+        //determine the position of the face
+        float emojiPositionX = (face.getPosition().x + face.getWidth()/2) - (emojiBitmap.getWidth() /2);
+        float emojiPositionY = (face.getPosition().y + face.getHeight()/2) - (emojiBitmap.getHeight() /3);
         // create a canvas to draw the bitmap
         Canvas canvas = new Canvas();
         canvas.drawBitmap(backgroundBitmap,0,0,null);
